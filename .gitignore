@@ -1,0 +1,31 @@
+# Byte-code / caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Hatch & Environment artifacts
+.hatch/
+.venv/
+env/
+venv/
+
+# Testing, Linting & Type checking
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Build & Distribution
+dist/
+build/
+*.egg-info/
+
+# Environments & Local Secrets
+.env
+
+# OS / Editor settings
+.DS_Store
+.vscode/
+.idea/

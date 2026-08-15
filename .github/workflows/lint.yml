@@ -1,0 +1,28 @@
+name: lint
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        types: [opened, reopened, synchronize]
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    check:
+        name: check
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.10"
+            - name: Install Hatch
+              run: pip install hatch
+            - name: Run Ruff
+              run: hatch run dev:lint
+            - name: Run Type Checking
+              run: hatch run dev:types

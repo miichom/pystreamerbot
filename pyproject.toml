@@ -1,0 +1,100 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pystreamerbot"
+version = "0.1.0"
+description = "Streamer.bot WebSocket client"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "miichom" }]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+  "websockets>=16.0",
+  "pydantic>=2.6.0",
+]
+
+# Option to allow end users to install optional extras via pip
+[project.optional-dependencies]
+docs = [
+  "pdoc",
+]
+dev = [
+  "mypy",
+  "pyright",
+  "pytest",
+  "pytest-asyncio",
+  "pytest-cov",
+  "ruff",
+]
+
+[project.urls]
+Documentation = "https://miichom.github.io/pystreamerbot/"
+Issues = "https://github.com/miichom/pystreamerbot/issues"
+Source = "https://github.com/miichom/pystreamerbot"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pystreamerbot"]
+
+# Hatch environment pulling directly from project.optional-dependencies
+[tool.hatch.envs.dev]
+features = ["dev"]
+
+[tool.hatch.envs.dev.scripts]
+test = "pytest -v --cov=pystreamerbot --cov-report=xml"
+lint = "ruff check pystreamerbot"
+types = "pyright pystreamerbot"
+
+[tool.hatch.envs.docs]
+features = ["docs"]
+
+[tool.hatch.envs.docs.scripts]
+build = "pdoc ./pystreamerbot --docformat google -o ./public"
+serve = "pdoc ./pystreamerbot --docformat google"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+source = ["pystreamerbot"]
+branch = true
+parallel = true
+
+[tool.coverage.paths]
+pystreamerbot = ["pystreamerbot"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pyright]
+include = ["pystreamerbot"]
+pythonVersion = "3.10"
+typeCheckingMode = "standard"
+reportUnknownParameterType = false
+reportMissingParameterType = false
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_unused_ignores = true
