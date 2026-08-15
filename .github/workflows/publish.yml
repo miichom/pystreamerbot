@@ -42,23 +42,23 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
 
-  publish-ghcr:
-    name: Publish to GitHub Packages
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-    steps:
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-      - name: Install Twine
-        run: pip install twine
-      - name: Upload to GitHub Package Registry
-        env:
-          TWINE_USERNAME: ${{ github.actor }}
-          TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          twine upload --repository-url https://upload.pkg.github.com/${{ github.repository_owner }} dist/* --skip-existing
+#  publish-ghcr:
+#    name: Publish to GitHub Packages
+#    needs: build
+#    runs-on: ubuntu-latest
+#    permissions:
+#      packages: write
+#    steps:
+#      - name: Download Build Artifacts
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: dist
+#          path: dist/
+#      - name: Install Twine
+#        run: pip install twine
+#      - name: Upload to GitHub Package Registry
+#        env:
+#          TWINE_USERNAME: ${{ github.actor }}
+#          TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+#        run: |
+#          twine upload --repository-url https://upload.pkg.github.com/${{ github.repository_owner }} dist/* --skip-existing
